@@ -2,10 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\NewsController;
-use App\Http\Controllers\Public\HomeController;
+use App\Http\Controllers\Public\HomeController as PublicHomeController; // ⬅️ change alias
 
-Route::get('/', [HomeController::class, 'index']);
+// Route for public view
+Route::get('/', [PublicHomeController::class, 'index'])->name('home');
 
+// Route login/register bawaan Laravel UI
+Auth::routes();
+
+// Route for news input admin
 Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::resource('news', NewsController::class);
 });
