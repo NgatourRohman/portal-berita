@@ -37,7 +37,14 @@
 <script src="https://cdn.ckeditor.com/ckeditor5/41.0.1/classic/ckeditor.js"></script>
 <script>
     ClassicEditor
-        .create( document.querySelector( '#ckeditor' ) )
+        .create( document.querySelector('#ckeditor'), {
+            simpleUpload: {
+                uploadUrl: "{{ route('ckeditor.upload') }}",
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            }
+        })
         .catch( error => {
             console.error( error );
         });

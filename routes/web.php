@@ -17,3 +17,4 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
 Route::get('/', [PublicHomeController::class, 'index'])->name('home');
 Route::get('/berita/{slug}', [PublicHomeController::class, 'show'])->name('berita.show');
+Route::post('/ckeditor/upload', [App\Http\Controllers\Admin\CKEditorUploadController::class, 'upload'])->name('ckeditor.upload');
