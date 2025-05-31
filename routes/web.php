@@ -14,3 +14,6 @@ Auth::routes();
 Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::resource('news', NewsController::class);
 });
+
+Route::get('/', [PublicHomeController::class, 'index'])->name('home');
+Route::get('/berita/{slug}', [PublicHomeController::class, 'show'])->name('berita.show');

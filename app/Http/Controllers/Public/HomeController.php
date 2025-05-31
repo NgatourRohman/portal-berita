@@ -13,4 +13,10 @@ class HomeController extends Controller
         $news = News::latest()->paginate(5);
         return view('public.news', compact('news'));
     }
+
+    public function show($slug)
+    {
+        $news = News::where('slug', $slug)->firstOrFail();
+        return view('public.detail', compact('news'));
+    }
 }
