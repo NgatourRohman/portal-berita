@@ -15,9 +15,8 @@
         </div>
 
         <div class="mb-3">
-            <label>Konten</label>
-            <textarea name="content" rows="6" class="form-control">{{ old('content', $news->content) }}</textarea>
-            @error('content') <div class="text-danger">{{ $message }}</div> @enderror
+            <label for="content" class="form-label">Isi Berita</label>
+            <textarea id="ckeditor" name="content" class="form-control" rows="8" required>{{ old('content', $news->content ?? '') }}</textarea>
         </div>
 
         <div class="mb-3">
@@ -34,4 +33,13 @@
         <a href="{{ route('news.index') }}" class="btn btn-secondary">Kembali</a>
     </form>
 </div>
+
+<script src="https://cdn.ckeditor.com/ckeditor5/41.0.1/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#ckeditor' ) )
+        .catch( error => {
+            console.error( error );
+        });
+</script>
 @endsection
