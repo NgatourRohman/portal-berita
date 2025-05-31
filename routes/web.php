@@ -13,6 +13,7 @@ Auth::routes();
 // Route for news input admin
 Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::resource('news', NewsController::class);
+    Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class)->middleware('auth');
 });
 
 Route::get('/', [PublicHomeController::class, 'index'])->name('home');
