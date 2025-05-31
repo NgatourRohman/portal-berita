@@ -8,10 +8,20 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $news = \App\Models\News::latest()->paginate(5);
-        return view('public.news', compact('news'));
+        $keyword = $request->query('q');
+
+        $query = News::latest();
+
+        if ($keyword) {
+            $query->where('title', 'like', "%$keyword%")
+                ->orWhere('content', 'like', "%$keyword%");
+        }
+
+        $news = $query->paginate(5);
+
+        return view('public.news', compact('news', 'keyword'));
     }
 
     public function show($slug)
