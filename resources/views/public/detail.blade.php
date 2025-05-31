@@ -12,9 +12,9 @@
         <h1 class="mb-3">{{ $news->title }}</h1>
 
         <p class="text-muted">
-            <small>Kategori: {{ $news->category->name }}</small>
+            <small>Kategori: {{ $item->category->name }}</small>
         </p>
-        
+
         @if ($news->image)
             <img src="{{ asset('storage/' . $news->image) }}" class="img-fluid rounded mb-3" alt="{{ $news->title }}">
         @endif

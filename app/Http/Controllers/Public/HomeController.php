@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Models\News;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -26,7 +27,12 @@ class HomeController extends Controller
 
     public function show($slug)
     {
-        $news = News::where('slug', $slug)->firstOrFail();
-        return view('public.detail', compact('news'));
+        $category = Category::where('name', $slug)->firstOrFail();
+        $news = $category->news()->latest()->paginate(5);
+
+        return view('public.news', [
+            'news' => $news,
+            'filter' => "Kategori: $slug"
+        ]);
     }
 }

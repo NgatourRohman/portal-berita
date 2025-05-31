@@ -11,6 +11,18 @@
     <div class="container py-4">
         <h1 class="mb-4">Berita Terbaru</h1>
 
+        @php
+            $categories = \App\Models\Category::all();
+        @endphp
+
+        <div class="mb-4">
+            <strong>Kategori:</strong>
+            @foreach ($categories as $cat)
+                <a href="{{ route('berita.kategori', $cat->name) }}"
+                    class="btn btn-sm btn-outline-primary me-1 mb-1">{{ $cat->name }}</a>
+            @endforeach
+        </div>
+
         <form action="{{ route('home') }}" method="GET" class="mb-4">
             <div class="input-group">
                 <input type="text" name="q" class="form-control" placeholder="Cari berita..."
@@ -19,6 +31,10 @@
             </div>
         </form>
 
+
+        @if (isset($filter))
+            <p class="text-muted">Menampilkan: <strong>{{ $filter }}</strong></p>
+        @endif
 
         @foreach ($news as $item)
             <div class="mb-5 border-bottom pb-3">
@@ -30,7 +46,7 @@
                 @endif
 
                 <p class="text-muted">
-                    <small>Kategori: {{ $news->category->name }}</small>
+                    <small>Kategori: {{ $item->category->name }}</small>
                 </p>
 
                 <p>{!! Str::limit(strip_tags($item->content), 150) !!}</p>
