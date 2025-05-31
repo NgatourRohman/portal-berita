@@ -17,6 +17,10 @@
                     <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->title }}" class="img-fluid mb-2" style="max-height: 200px;">
                 @endif
 
+                <p class="text-muted">
+                    <small>Kategori: {{ $news->category->name }}</small>
+                </p>
+                
                 <p>{!! Str::limit(strip_tags($item->content), 150) !!}</p>
                 <a href="{{ route('berita.show', $item->slug) }}" class="btn btn-sm btn-outline-primary">Baca selengkapnya</a>
             </div>
