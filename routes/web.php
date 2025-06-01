@@ -21,3 +21,4 @@ Route::get('/berita/{slug}', [PublicHomeController::class, 'show'])->name('berit
 Route::post('/ckeditor/upload', [App\Http\Controllers\Admin\CKEditorUploadController::class, 'upload'])->name('ckeditor.upload');
 Route::get('/kategori/{slug}', [PublicHomeController::class, 'category'])->name('berita.kategori');
 Route::get('/admin/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
+Route::get('/sitemap.xml', [App\Http\Controllers\SitemapController::class, 'index']);
