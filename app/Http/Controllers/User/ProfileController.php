@@ -17,19 +17,28 @@ class ProfileController extends Controller
 
     public function update(Request $request)
     {
-        $user = Auth::user();
+        // Ambil user yang login
+        $user = Auth::user(); // return instance of App\Models\User
+
+        if (!$user instanceof \App\Models\User) {
+            abort(500, 'User model tidak ditemukan');
+        }
 
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'nullable|min:6|confirmed'
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'password' => 'nullable|string|min:6|confirmed'
         ]);
 
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password ? Hash::make($request->password) : $user->password
-        ]);
+        // Assign manual ke masing-masing field
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save(); // ⬅ ini menggantikan `update()`
 
         return redirect()->route('profile.edit')->with('success', 'Profil berhasil diperbarui.');
     }
