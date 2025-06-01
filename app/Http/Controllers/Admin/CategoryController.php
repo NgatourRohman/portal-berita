@@ -28,6 +28,7 @@ class CategoryController extends Controller
 
         Category::create([
             'name' => $request->name,
+            'slug' => Str::slug($request->name),
         ]);
 
         return redirect()->route('categories.index')->with('success', 'Kategori berhasil ditambahkan');
@@ -46,6 +47,7 @@ class CategoryController extends Controller
 
         $category->update([
             'name' => $request->name,
+            'slug' => Str::slug($request->name),
         ]);
 
         return redirect()->route('categories.index')->with('success', 'Kategori berhasil diupdate');

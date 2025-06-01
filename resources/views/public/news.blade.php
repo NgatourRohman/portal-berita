@@ -18,7 +18,7 @@
         <div class="mb-4">
             <strong>Kategori:</strong>
             @foreach ($categories as $cat)
-                <a href="{{ route('berita.kategori', $cat->name) }}"
+                <a href="{{ route('berita.kategori', $cat->slug) }}">
                     class="btn btn-sm btn-outline-primary me-1 mb-1">{{ $cat->name }}</a>
             @endforeach
         </div>

@@ -27,7 +27,7 @@ class HomeController extends Controller
 
     public function show($slug)
     {
-        $category = Category::where('name', $slug)->firstOrFail();
+        $category = Category::where('slug', $slug)->firstOrFail();
         $news = $category->news()->latest()->paginate(5);
 
         return view('public.news', [
