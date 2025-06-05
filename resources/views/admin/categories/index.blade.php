@@ -3,7 +3,6 @@
 
 @section('content')
 <div class="container-fluid">
-    <h1>Kategori</h1>
     <a href="{{ route('categories.create') }}" class="btn btn-primary mb-3">+ Tambah Kategori</a>
 
     <table class="table table-bordered">

@@ -3,7 +3,6 @@
 
 @section('content')
 <div class="container-fluid">
-    <h1>Berita</h1>
     <a href="{{ route('news.create') }}" class="btn btn-primary mb-3">+ Tambah Berita</a>
 
     @if(session('success'))
