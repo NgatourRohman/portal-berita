@@ -8,6 +8,16 @@
 </head>
 
 <body>
+
+    @if (Auth::check())
+        <div class="text-end mb-3">
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button class="btn btn-sm btn-danger">Logout</button>
+            </form>
+        </div>
+    @endif
+
     <div class="container py-4">
         <h1 class="mb-4">Berita Terbaru</h1>
 

@@ -43,7 +43,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 // ========================
 // ROUTE: Profile Controller
 // ========================
-Route::middleware('auth')->group(function () {
+
+// Hanya admin bisa akses profile + users
+Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::resource('users', App\Http\Controllers\Admin\UserController::class);
