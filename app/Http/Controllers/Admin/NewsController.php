@@ -41,7 +41,9 @@ class NewsController extends Controller
             'slug' => Str::slug($request->title),
             'content' => $request->content,
             'image' => $imagePath,
+            'category_id' => $request->category_id,
         ]);
+
 
         return redirect()->route('news.index')->with('success', 'Berita ditambahkan');
     }
@@ -49,8 +51,7 @@ class NewsController extends Controller
     public function edit(News $news)
     {
         $categories = Category::all();
-        return view('admin.news.edit', compact('categories'));
-        return view('admin.news.edit', compact('news'));
+        return view('admin.news.edit', compact('news', 'categories'));
     }
 
     public function update(Request $request, News $news)
