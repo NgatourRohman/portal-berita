@@ -1,23 +1,8 @@
-<!DOCTYPE html>
-<html lang="id">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <title>Berita Terbaru - Portal Berita</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-</head>
+@section('title', 'Berita Terbaru')
 
-<body>
-
-    @if (Auth::check())
-        <div class="text-end mb-3">
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button class="btn btn-sm btn-danger">Logout</button>
-            </form>
-        </div>
-    @endif
-
+@section('content')
     <div class="container py-4">
         <h1 class="mb-4">Berita Terbaru</h1>
 
@@ -27,14 +12,15 @@
             $selected = request()->query('kategori', []);
         @endphp
 
+        {{-- Filter Kategori --}}
         <div class="mb-4">
             <strong>Kategori:</strong>
             @foreach ($categories as $cat)
                 @php
                     $isSelected = in_array($cat->slug, $selected);
                     $newSelection = $isSelected
-                        ? array_diff($selected, [$cat->slug]) // batalkan
-                        : array_merge($selected, [$cat->slug]); // tambahkan
+                        ? array_diff($selected, [$cat->slug])
+                        : array_merge($selected, [$cat->slug]);
 
                     $query = ['kategori' => $newSelection];
                     if (request('q')) {
@@ -52,7 +38,7 @@
             @endif
         </div>
 
-
+        {{-- Pencarian --}}
         <form action="{{ route('home') }}" method="GET" class="mb-4">
             <div class="input-group">
                 <input type="text" name="q" class="form-control" placeholder="Cari berita..."
@@ -61,11 +47,11 @@
             </div>
         </form>
 
-
         @if (isset($filter))
             <p class="text-muted">Menampilkan: <strong>{{ $filter }}</strong></p>
         @endif
 
+        {{-- Daftar Berita --}}
         @foreach ($news as $item)
             <div class="mb-5 border-bottom pb-3">
                 <h3><a href="{{ route('berita.show', $item->slug) }}">{{ $item->title }}</a></h3>
@@ -89,10 +75,9 @@
             <p>Hasil pencarian untuk: <strong>{{ request('q') }}</strong></p>
         @endif
 
+        {{-- Pagination --}}
         <div class="d-flex justify-content-center">
             {{ $news->links() }}
         </div>
     </div>
-</body>
-
-</html>
+@endsection
