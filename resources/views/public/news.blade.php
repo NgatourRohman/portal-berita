@@ -22,17 +22,36 @@
         <h1 class="mb-4">Berita Terbaru</h1>
 
         @php
+            use Illuminate\Support\Arr;
             $categories = \App\Models\Category::all();
+            $selected = request()->query('kategori', []);
         @endphp
 
         <div class="mb-4">
             <strong>Kategori:</strong>
             @foreach ($categories as $cat)
-                <a href="{{ route('berita.kategori', $cat->slug) }}" class="btn btn-sm btn-outline-primary me-1 mb-1">
+                @php
+                    $isSelected = in_array($cat->slug, $selected);
+                    $newSelection = $isSelected
+                        ? array_diff($selected, [$cat->slug]) // batalkan
+                        : array_merge($selected, [$cat->slug]); // tambahkan
+
+                    $query = ['kategori' => $newSelection];
+                    if (request('q')) {
+                        $query['q'] = request('q');
+                    }
+                @endphp
+                <a href="{{ route('home', $query) }}"
+                    class="btn btn-sm mb-1 me-1 {{ $isSelected ? 'btn-primary' : 'btn-outline-primary' }}">
                     {{ $cat->name }}
                 </a>
             @endforeach
+
+            @if ($selected)
+                <a href="{{ route('home') }}" class="btn btn-sm btn-outline-danger mb-1">Reset Filter</a>
+            @endif
         </div>
+
 
         <form action="{{ route('home') }}" method="GET" class="mb-4">
             <div class="input-group">
