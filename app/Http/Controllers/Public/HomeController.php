@@ -27,12 +27,19 @@ class HomeController extends Controller
 
     public function show($slug)
     {
+        $berita = News::where('slug', $slug)->firstOrFail();
+
+        return view('public.show', compact('berita'));
+    }
+
+    public function kategori($slug)
+    {
         $category = Category::where('slug', $slug)->firstOrFail();
         $news = $category->news()->latest()->paginate(5);
 
         return view('public.news', [
             'news' => $news,
-            'filter' => "Kategori: $slug"
+            'filter' => "Kategori: $category->name"
         ]);
     }
 }
