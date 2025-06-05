@@ -14,7 +14,7 @@ use App\Http\Controllers\User\ProfileController;
 // ========================
 Route::get('/', [PublicHomeController::class, 'index'])->name('home');
 Route::get('/berita/{slug}', [PublicHomeController::class, 'show'])->name('berita.show');
-Route::get('/kategori/{slug}', [PublicHomeController::class, 'category'])->name('berita.kategori');
+Route::get('/kategori/{slug}', [PublicHomeController::class, 'show'])->name('berita.kategori');
 
 // ========================
 // ROUTE: Auth (Laravel UI)
